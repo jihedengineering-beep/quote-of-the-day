@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote of the Day</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: Inter, Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, #6d5dfc55, transparent 35%),
+        radial-gradient(circle at 80% 80%, #00d4ff44, transparent 35%),
+        #09090f;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .45;
+      animation: float 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .orb.one { background: #7c3aed; top: -100px; left: -80px; }
+    .orb.two { background: #06b6d4; bottom: -100px; right: -80px; animation-delay: -4s; }
+
+    @keyframes float {
+      to { transform: translate(35px, -25px) scale(1.08); }
+    }
+
+    .card {
+      width: min(720px, 100%);
+      padding: 42px 34px 30px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 28px;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+      position: relative;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: 28px;
+    }
+
+    #quote {
+      font-size: clamp(27px, 5vw, 46px);
+      line-height: 1.15;
+      font-weight: 750;
+      margin: 0 auto 34px;
+      max-width: 620px;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    #quote.fade {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #111;
+      background: white;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,255,255,.18);
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      opacity: .4;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <main class="card">
+    <div class="label">✦ Quote of the Day ✦</div>
+
+    <div id="quote"></div>
+
+    <button onclick="newQuote()">Another one →</button>
+
+    <div class="footer">made with questionable decisions</div>
+  </main>
+
+  <script>
+    const quotes = [
+      "Born to chill, forced to exist.",
+      "Too lazy to be normal.",
+      "Confidently confused.",
+      "Born to sleep, forced to function.",
+      "Too lazy for character development.",
+      "Just vibes, no instructions.",
+      "Running on questionable decisions.",
+      "Probably a bad idea.",
+      "Doing nothing professionally.",
+      "Too tired to care.",
+      "Built different. Slightly broken.",
+      "Low effort, high hopes.",
+      "Making it up as I go.",
+      "Chaos, but make it casual.",
+      "Overthinking since forever.",
+      "Calmly losing the plot.",
+      "Somehow, it works.",
+      "Not serious. Never was.",
+      "Here. Somehow.",
+      "Trusting the process. Questioning the process.",
+      "Born to vibe, forced to socialize.",
+      "Too broke to be mysterious.",
+      "Life is going great. No evidence though.",
+      "I have a plan. It's probably a bad one.",
+      "Professional overthinker, amateur programmer.",
+      "Currently pretending everything is under control.",
+      "Too lazy to explain.",
+      "Zero thoughts, full send."
+    ];
+
+    let lastIndex = -1;
+
+    function newQuote() {
+      const element = document.getElementById("quote");
+      let index;
+
+      do {
+        index = Math.floor(Math.random() * quotes.length);
+      } while (quotes.length > 1 && index === lastIndex);
+
+      lastIndex = index;
+
+      element.classList.add("fade");
+
+      setTimeout(() => {
+        element.textContent = `"${quotes[index]}"`;
+        element.classList.remove("fade");
+      }, 180);
+    }
+
+    newQuote();
+  </script>
+</body>
+</html>
